@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./styles.css";
+import { useDispatch, useSelector } from "react-redux";
+import { increment, decrement, reset, asyncIncrement } from "./actions";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello world!</h1>
+      <Counter />
     </div>
   );
 }
 
-export default App;
+const Counter = () => {
+  const dispatch = useDispatch();
+
+  const counter = useSelector((state) => state.counterReducer);
+
+  const onIncrement = () => {
+    dispatch(increment());
+  };
+  const onDecrement = () => {
+    dispatch(decrement());
+  };
+  const onReset = () => {
+    dispatch(reset());
+  };
+
+  const onAsyncIncrement = () => {
+    dispatch(asyncIncrement());
+  };
+
+  return (
+    <div>
+      <button onClick={onIncrement}>increment</button>
+      <button onClick={onDecrement}>decrement</button>
+      <button onClick={onAsyncIncrement}>async</button>
+      <button onClick={onReset}>RESET</button>
+      <h1>{counter.count}</h1>
+    </div>
+  );
+};
